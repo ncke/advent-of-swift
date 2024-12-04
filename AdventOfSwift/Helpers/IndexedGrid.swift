@@ -16,8 +16,6 @@ class IndexedGrid<Element: Hashable>: Grid<Element> {
         super.init(content: content)
     }
 
-    func occurrences(of element: Element) -> [Coord] {
-        index[element] ?? []
-    }
+    func occurrences(of element: Element) -> [Coord] { index[element] ?? [] }
 
 }

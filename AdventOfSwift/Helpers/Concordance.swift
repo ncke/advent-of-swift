@@ -4,37 +4,25 @@ import Foundation
 
 struct Concordance<Element: Hashable> {
 
-    private var concordance: [Element: [Int]]
+    private let concordance: [Element: [Int]]
 
     init(_ array: [Element]) {
-        concordance = [:]
-
+        var concordance = [Element: [Int]]()
         for (index, element) in array.enumerated() {
             concordance.collate(intoKey: element, index)
         }
+
+        self.concordance = concordance
     }
 
-    subscript(_ element: Element) -> [Int] {
-        concordance[element] ?? []
-    }
+    subscript(_ element: Element) -> [Int] { concordance[element] ?? [] }
 
     func mostCommonElement() -> Element? {
-        guard
-            var commonElement = concordance.keys.first,
-            var commonCount = concordance[commonElement]?.count
-        else {
-            return nil
-        }
-
-        for element in concordance.keys {
+        concordance.keys.reduce((nil, 0)) { partial, element in
+            let (_, maxCount) = partial
             let count = concordance[element]!.count
-            if count > commonCount {
-                commonElement = element
-                commonCount = count
-            }
-        }
-
-        return commonElement
+            return count > maxCount ? (element, count) : partial
+        }.0
     }
 
 }

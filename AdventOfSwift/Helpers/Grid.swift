@@ -45,11 +45,6 @@ extension RandomAccessCollection where Element: RandomAccessCollection {
 
 extension Grid {
 
-    static func calculateSizeFromContent(_ content: [[Element]]) -> Size {
-        let height = content.count
-        return Size(height > 0 ? content[0].count : 0, height)
-    }
-
     private static func extractFromString(_ string: String) -> [[Character]] {
         string.lines.map { line in
             (0..<line.count).map { index in line.at(index) }

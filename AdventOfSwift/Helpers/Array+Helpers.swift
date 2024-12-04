@@ -48,14 +48,3 @@ extension Array {
     }
 
 }
-
-// MARK: - Memo Map
-
-extension Array where Element: Hashable {
-
-    func memoMap<T>(_ transform: (Element) -> T) -> [T] {
-        let memo = Memo<Element, T>()
-        return self.map { element in memo[element, else: transform] }
-    }
-
-}

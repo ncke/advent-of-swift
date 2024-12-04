@@ -4,7 +4,7 @@ import Foundation
 
 typealias Coord = Vec2
 
-// MARK: - Vector2
+// MARK: - Vec2
 
 struct Vec2 {
     let i, j: Int
@@ -39,9 +39,7 @@ extension Vec2 {
 
 extension Vec2 {
 
-    static prefix func - (value: Vec2) -> Vec2 {
-        Vec2(-value.i, -value.j)
-    }
+    static prefix func - (value: Vec2) -> Vec2 { Vec2(-value.i, -value.j) }
 
 }
 
@@ -53,9 +51,7 @@ extension Vec2 {
         Vec2(lhs * rhs.i, lhs * rhs.j)
     }
 
-    static func * (lhs: Vec2, rhs: Int) -> Vec2 {
-        rhs * lhs
-    }
+    static func * (lhs: Vec2, rhs: Int) -> Vec2 { rhs * lhs }
 
 }
 
@@ -63,9 +59,7 @@ extension Vec2 {
 
 extension Vec2: AdditiveArithmetic {
 
-    static var zero: Vec2 {
-        return Vec2(0, 0)
-    }
+    static var zero: Vec2 { return Vec2(0, 0) }
 
     static func + (lhs: Vec2, rhs: Vec2) -> Vec2 {
         return Vec2(lhs.i + rhs.i, lhs.j + rhs.j)

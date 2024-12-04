@@ -4,6 +4,8 @@ import Foundation
 
 struct CeresSearch {
 
+    static let xmas = "XMAS"
+
     static func solve() {
         let grid = IndexedGrid(string: input)
 
@@ -11,12 +13,14 @@ struct CeresSearch {
         // directions we can traverse to find XMAS.
         let s1 = grid.occurrences(of: "X").map { origin in
             Coord.directions.count { direction in
-                matchXmas(origin: origin, direction: direction, in: grid)
+                (0..<xmas.count).allSatisfy { i in
+                    grid[origin + i * direction] == xmas.at(i)
+                }
             }
         }.sum
 
         // For each occurrence of A in the grid, count those for which we
-        // can observe opposing pairs of M and S.
+        // can observe opposing pairs of M and S in the diagonal corners.
         let s2 = grid.occurrences(of: "A").count { origin in
 
             func check(corner c1: Int, _ c2: Int) -> Bool {
@@ -30,26 +34,6 @@ struct CeresSearch {
         }
 
         printSolutions(s1, s2)
-    }
-
-    static let xmas = "XMAS"
-
-    static func matchXmas(
-        origin: Coord,
-        direction: Vec2,
-        in grid: Grid<Character>
-    ) -> Bool {
-        for i in 0..<xmas.count {
-            let posn = origin + i * direction
-            guard
-                grid.size.contains(posn),
-                grid[posn] == xmas.at(i)
-            else {
-                return false
-            }
-        }
-
-        return true
     }
 
 }
