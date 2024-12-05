@@ -1,6 +1,6 @@
 import Foundation
 
-CeresSearch.solve()
+PrintQueue.solve()
 
 func printSolutions(_ s1: Int?, _ s2: Int?) {
     print("Solutions:")

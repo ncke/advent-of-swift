@@ -12,6 +12,10 @@ extension StringProtocol where SubSequence == Substring {
         self.split(separator: /\s+/)
     }
 
+    var commaSeparatedValues: [Substring] {
+        self.split(separator: /,/)
+    }
+
     var columns: [[Substring]] {
         self.lines.reduce(into: []) { partial, substring in
             let wds = substring.words

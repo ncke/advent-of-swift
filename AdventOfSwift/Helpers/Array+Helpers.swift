@@ -47,4 +47,18 @@ extension Array {
         return true
     }
 
+    func split(by predicate: (Element) -> Bool) -> ([Element], [Element]) {
+        var p1 = [Element](), p2 = [Element]()
+
+        self.forEach { element in
+            if predicate(element) {
+                p1.append(element)
+            } else {
+                p2.append(element)
+            }
+        }
+
+        return (p1, p2)
+    }
+
 }
