@@ -11,11 +11,11 @@ extension Dictionary where Value: RangeReplaceableCollection {
         using key: Key
     ) {
         sequence.forEach { element in
-            collate(element, using: key)
+            insert(element, using: key)
         }
     }
 
-    mutating func collate(_ element: Value.Element, using key: Key) {
+    mutating func insert(_ element: Value.Element, using key: Key) {
         if var array = self[key] {
             array.append(element)
             self[key] = array
@@ -41,7 +41,7 @@ extension Sequence where Element: Hashable {
     func concordance() -> Index<Element, Int> {
         var index = Index<Element, Int>()
         for (i, element) in self.enumerated() {
-            index.collate(i, using: element)
+            index.insert(i, using: element)
         }
 
         return index

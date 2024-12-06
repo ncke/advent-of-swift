@@ -2,45 +2,24 @@ import Foundation
 
 struct GuardGallivant {
 
-    class Path {
-        private var visited = [Coord: [Direction]]()
-        private(set) var containsLoop = false
-
-        func insertVisit(coord: Coord, direction: Direction) {
-            guard !isLoopIfVisited(coord: coord, direction: direction) else {
-                containsLoop = true
-                return
-            }
-
-            visited.collate(direction, using: coord)
-        }
-
-        func isLoopIfVisited(coord: Coord, direction: Direction) -> Bool {
-            visited[coord]?.contains(direction) ?? false
-        }
-
-        func countVisitedLocations() -> Int { visited.keys.count }
-
-    }
-
     static func solve() {
         let grid = Grid<Character>(string: input)
         let index = grid.index()
         let startLocation = index["^"]!.first!
 
         func walk(grid: Grid<Character>) -> Path {
-            let path = Path()
+            var path = Path()
             var direction: Direction = .north
             var location = startLocation
 
-            while grid.size.contains(location) && !path.containsLoop {
+            while grid.size.contains(location) && !path.hasLoop {
                 let ahead = direction.advance(coord: location)
                 if grid[ahead] == "#" {
                     direction = direction.turnedRight()
                     continue
                 }
 
-                path.insertVisit(coord: location, direction: direction)
+                path.addStep(to: location, direction: direction)
                 location = ahead
             }
 
@@ -50,17 +29,18 @@ struct GuardGallivant {
         // Walk the grid and count the number of distinct locations visited
         // (some locations may be visited more than once).
 
-        let s1 = walk(grid: grid).countVisitedLocations()
+        let s1 = walk(grid: grid).visitedCoordinates().count
 
         // Enumerate the possible locations for an obstacle, try each and
         // count how many create a loop.
 
         let s2 = index["."]!.count { obstacle in
-            grid[obstacle] = "#"
-            let path = walk(grid: grid)
-            grid[obstacle] = "."
+            var obstructedGrid = grid
+            obstructedGrid[obstacle] = "#"
+            let path = walk(grid: obstructedGrid)
+            obstructedGrid[obstacle] = "."
 
-            return path.containsLoop
+            return path.hasLoop
         }
 
         printSolutions(s1, s2)

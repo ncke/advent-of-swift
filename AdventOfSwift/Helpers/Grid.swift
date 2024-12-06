@@ -3,7 +3,7 @@ import Foundation
 // MARK: - Grid
 
 /// A grid of Element values that is addressable by coordinate.
-class Grid<Element> {
+struct Grid<Element> {
 
     private var content: [[Element]]
 
@@ -14,7 +14,7 @@ class Grid<Element> {
         self.size = content.size
     }
 
-    convenience init(string: String) where Element == Character {
+    init(string: String) where Element == Character {
         let content = Grid.extractFromString(string)
         self.init(content: content)
     }
@@ -33,7 +33,7 @@ extension Grid where Element: Hashable {
     func index() -> Index<Element, Coord> {
         var index = Index<Element, Coord>()
         content.size.coordinates.forEach {
-            coord in index.collate(coord, using: self[coord]!)
+            coord in index.insert(coord, using: self[coord]!)
         }
 
         return index
