@@ -5,7 +5,7 @@ import Foundation
 /// A grid of Element values that is addressable by coordinate.
 class Grid<Element> {
 
-    private let content: [[Element]]
+    private var content: [[Element]]
 
     var size: Size
 
@@ -20,7 +20,8 @@ class Grid<Element> {
     }
 
     subscript(_ coord: Coord) -> Element? {
-        size.contains(coord) ? content[coord.j][coord.i] : nil
+        get { size.contains(coord) ? content[coord.j][coord.i] : nil }
+        set { content[coord.j][coord.i] = newValue! }
     }
 
 }
@@ -49,6 +50,34 @@ extension Grid {
         string.lines.map { line in
             (0..<line.count).map { index in line.at(index) }
         }
+    }
+
+}
+
+// MARK: - Comparison
+
+extension Grid where Element: Equatable {
+
+    func countOccurrences(of element: Element) -> Int {
+        size.coordinates.count { coord in self[coord] == element }
+    }
+
+}
+
+// MARK: - Description
+
+extension Grid: CustomStringConvertible where Element: CustomStringConvertible {
+
+    var description: String {
+        var desc = ""
+        for y in 0..<size.height {
+            for x in 0..<size.width {
+                desc += content[Vec2(x, y)].description
+            }
+            desc += "\n"
+        }
+
+        return desc
     }
 
 }

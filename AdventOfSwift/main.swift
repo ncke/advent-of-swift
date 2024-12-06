@@ -1,6 +1,6 @@
 import Foundation
 
-PrintQueue.solve()
+GuardGallivant.solve()
 
 func printSolutions(_ s1: Int?, _ s2: Int?) {
     print("Solutions:")

@@ -70,3 +70,7 @@ extension Vec2: AdditiveArithmetic {
     }
 
 }
+
+// MARK: - Hashable
+
+extension Vec2: Hashable {}

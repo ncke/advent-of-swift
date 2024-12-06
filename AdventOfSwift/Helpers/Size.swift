@@ -4,7 +4,11 @@ import Foundation
 
 struct Size {
 
-    var dimensions: Vec2
+    let dimensions: Vec2
+
+    var width: Int { dimensions.i }
+
+    var height: Int { dimensions.j }
 
     init(_ width: Int, _ height: Int) {
         self.dimensions = Vec2(width, height)
