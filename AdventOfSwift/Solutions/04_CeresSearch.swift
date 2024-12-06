@@ -7,11 +7,12 @@ struct CeresSearch {
     static let xmas = "XMAS"
 
     static func solve() {
-        let grid = IndexedGrid(string: input)
+        let grid = Grid(string: input)
+        let index = grid.index()
 
         // For each occurrence of X in the grid, count in how many
         // directions we can traverse to find XMAS.
-        let s1 = grid.occurrences(of: "X").map { origin in
+        let s1 = index["X"]!.map { origin in
             Coord.directions.count { direction in
                 (0..<xmas.count).allSatisfy { i in
                     grid[origin + i * direction] == xmas.at(i)
@@ -21,7 +22,7 @@ struct CeresSearch {
 
         // For each occurrence of A in the grid, count those for which we
         // can observe opposing pairs of M and S in the diagonal corners.
-        let s2 = grid.occurrences(of: "A").count { origin in
+        let s2 = index["A"]!.count { origin in
 
             func check(corner c1: Int, _ c2: Int) -> Bool {
                 let offset = Vec2(c1, c2)

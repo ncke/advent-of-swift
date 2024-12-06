@@ -22,8 +22,9 @@ struct RedNosedReports {
         // differs from the most common.
         func findProblematicIndices(in levels: [Int]) -> [Int] {
             let deltas = levels.mapConsecutive(-)
-            let trend = Concordance(deltas.map { delta in delta.signum()} )
-                .mostCommonElement()
+            let trend = deltas.map {
+                delta in delta.signum()
+            }.concordance().mostCommonKey()
 
             var indices = Set<Int>()
             deltas.enumerated().forEach { (index, delta) in

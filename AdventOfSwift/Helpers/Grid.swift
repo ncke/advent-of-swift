@@ -26,7 +26,22 @@ class Grid<Element> {
 
 }
 
-// MARK: - Extraction
+// MARK: - Coordinate Index
+
+extension Grid where Element: Hashable {
+
+    func index() -> Index<Element, Coord> {
+        var index = Index<Element, Coord>()
+        content.size.coordinates.forEach {
+            coord in index.collate(coord, using: self[coord]!)
+        }
+
+        return index
+    }
+
+}
+
+// MARK: - Array of Array Helpers
 
 extension RandomAccessCollection where Element: RandomAccessCollection {
 
@@ -43,6 +58,8 @@ extension RandomAccessCollection where Element: RandomAccessCollection {
     }
 
 }
+
+// MARK: - Extraction
 
 extension Grid {
 

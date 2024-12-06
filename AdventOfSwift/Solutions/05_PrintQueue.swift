@@ -7,7 +7,7 @@ struct PrintQueue {
     static func solve() {
         let (rulePairs, updates) = parseInputs()
         var rules = [Int: [Int]]()
-        rulePairs.forEach { (lhs, rhs) in rules.collate(intoKey: lhs, rhs) }
+        rulePairs.forEach { (lhs, rhs) in rules.collate(rhs, using: lhs) }
 
         func isCorrectlyOrdered(update: [Int]) -> Bool {
             update.enumerated().allSatisfy { (index, page) in

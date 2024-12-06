@@ -12,7 +12,7 @@ struct GuardGallivant {
                 return
             }
 
-            visited.collate(intoKey: coord, direction)
+            visited.collate(direction, using: coord)
         }
 
         func isLoopIfVisited(coord: Coord, direction: Direction) -> Bool {
@@ -24,8 +24,9 @@ struct GuardGallivant {
     }
 
     static func solve() {
-        let grid = IndexedGrid<Character>(string: input)
-        let startLocation = grid.occurrences(of: "^").first!
+        let grid = Grid<Character>(string: input)
+        let index = grid.index()
+        let startLocation = index["^"]!.first!
 
         func walk(grid: Grid<Character>) -> Path {
             let path = Path()
@@ -46,9 +47,15 @@ struct GuardGallivant {
             return path
         }
 
+        // Walk the grid and count the number of distinct locations visited
+        // (some locations may be visited more than once).
+
         let s1 = walk(grid: grid).countVisitedLocations()
 
-        let s2 = grid.occurrences(of: ".").count { obstacle in
+        // Enumerate the possible locations for an obstacle, try each and
+        // count how many create a loop.
+
+        let s2 = index["."]!.count { obstacle in
             grid[obstacle] = "#"
             let path = walk(grid: grid)
             grid[obstacle] = "."
