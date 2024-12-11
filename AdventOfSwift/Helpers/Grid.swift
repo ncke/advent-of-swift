@@ -30,10 +30,12 @@ struct Grid<Element> {
 
 extension Grid where Element: Hashable {
 
-    func index() -> Index<Element, Coord> {
+    func index(exclusions: Set<Element> = []) -> Index<Element, Coord> {
         var index = Index<Element, Coord>()
-        content.size.coordinates.forEach {
-            coord in index.insert(coord, using: self[coord]!)
+        content.size.coordinates.forEach { coord in
+            let element = self[coord]!
+            guard !exclusions.contains(element) else { return }
+            index.insert(coord, using: element)
         }
 
         return index

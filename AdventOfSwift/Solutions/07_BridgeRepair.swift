@@ -40,7 +40,9 @@ struct BridgeRepair {
             return input.compactMap { (expect, operands) in
                 let operatorCombinations = memo[
                     operands.count - 1,
-                    else: { n in  operators.combinationsWithRepetition(n) }
+                    else: { n in
+                        operators.permutations(n, allowRepetition: true)
+                    }
                 ]
 
                 for combination in operatorCombinations {

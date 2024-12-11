@@ -74,3 +74,13 @@ extension Vec2: AdditiveArithmetic {
 // MARK: - Hashable
 
 extension Vec2: Hashable {}
+
+// MARK: -
+
+extension Vec2: CustomStringConvertible {
+
+    var description: String {
+        "[\(self.i),\(self.j)]"
+    }
+
+}
