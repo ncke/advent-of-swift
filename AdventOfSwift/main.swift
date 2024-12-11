@@ -1,6 +1,6 @@
 import Foundation
 
-ResonantCollinearity.solve()
+DiskFragmenter.solve()
 
 func printSolutions(_ s1: Int?, _ s2: Int?) {
     print("Solutions:")
