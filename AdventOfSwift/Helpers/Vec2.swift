@@ -29,8 +29,20 @@ extension Vec2 {
         (0,1), (1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1)
     )
 
+    static let cardinalDirections = fromPairs(
+        (0,1), (1,0), (0,-1), (-1,0)
+    )
+
     static func fromPairs(_ pairs: (Int, Int)...) -> [Vec2] {
         pairs.map { pair in Vec2(pair) }
+    }
+
+    func neighbours() -> [Vec2] {
+        Self.directions.map { direction in self + direction }
+    }
+
+    func cardinalNeighbours() -> [Vec2] {
+        Self.cardinalDirections.map { direction in self + direction }
     }
 
 }

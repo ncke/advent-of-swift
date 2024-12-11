@@ -19,6 +19,14 @@ struct Grid<Element> {
         self.init(content: content)
     }
 
+    init(digits: String) where Element == Int {
+        let content = Grid.extractFromString(digits).map { row in
+            row.map { element in element.hexDigitValue! }
+        }
+
+        self.init(content: content)
+    }
+
     subscript(_ coord: Coord) -> Element? {
         get { size.contains(coord) ? content[coord.j][coord.i] : nil }
         set { content[coord.j][coord.i] = newValue! }
