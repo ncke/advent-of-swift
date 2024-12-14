@@ -1,6 +1,6 @@
 import Foundation
 
-HoofIt.solve()
+PlutonianPebbles.solve()
 
 func printSolutions(_ s1: Int?, _ s2: Int?) {
     print("Solutions:")
