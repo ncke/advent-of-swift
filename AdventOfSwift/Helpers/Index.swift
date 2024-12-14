@@ -32,6 +32,10 @@ extension Dictionary where Value: RangeReplaceableCollection {
         }.0
     }
 
+    func pairs() -> [(Key, Value.Element)] {
+        keys.flatMap { key in self[key]!.map { value in (key, value) } }
+    }
+
 }
 
 // MARK: - Concordance

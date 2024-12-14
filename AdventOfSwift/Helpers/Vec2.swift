@@ -21,7 +21,7 @@ struct Vec2 {
 
 }
 
-// MARK: - Directions
+// MARK: - Directions and Neighbours
 
 extension Vec2 {
 
@@ -43,6 +43,50 @@ extension Vec2 {
 
     func cardinalNeighbours() -> [Vec2] {
         Self.cardinalDirections.map { direction in self + direction }
+    }
+
+}
+
+extension Array where Element == Vec2 {
+
+    func containsNeighbourOf(
+        _ coord: Vec2,
+        cardinalsOnly: Bool = false
+    ) -> Bool {
+        let neighbours = cardinalsOnly
+        ? coord.cardinalNeighbours()
+        : coord.neighbours()
+
+        return first { element in
+            neighbours.contains(element)
+        } != nil
+    }
+
+    func indicesNeighbouring(
+        _ coord: Vec2,
+        cardinalsOnly: Bool = false
+    ) -> [Int] {
+        let neighbours = cardinalsOnly
+        ? coord.cardinalNeighbours()
+        : coord.neighbours()
+
+        return self.enumerated().compactMap { (index, element) in
+            neighbours.contains(element) ? index : nil
+        }
+    }
+
+    func corners() -> (Vec2, Vec2)? {
+        guard count > 0 else { return nil }
+
+        var (c1, c2) = (first!, last!)
+        self.forEach { coord in
+            if coord.i < c1.i { c1 = Vec2(coord.i, c1.j) }
+            if coord.i > c2.i { c2 = Vec2(coord.i, c2.j) }
+            if coord.j < c1.j { c1 = Vec2(c1.i, coord.j) }
+            if coord.j > c2.j { c2 = Vec2(c2.i, coord.j) }
+        }
+
+        return (c1, c2)
     }
 
 }
@@ -87,7 +131,7 @@ extension Vec2: AdditiveArithmetic {
 
 extension Vec2: Hashable {}
 
-// MARK: -
+// MARK: - Description
 
 extension Vec2: CustomStringConvertible {
 
